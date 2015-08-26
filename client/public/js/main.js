@@ -27,6 +27,7 @@ $('form').on('submit', function(e){
       .show()
       .html(data.message);
     $('#error-message').hide();
+    getPuppies();
   })
   .fail(function(err){
     $('#error-message')
@@ -43,9 +44,14 @@ function getPuppies(){
     url: '/api/v1/puppies',
   })
   .done(function(data) {
-    console.log(data);
+    $('#results').html('');
+    data.forEach(function(puppy){
+      $('#results').prepend(
+        '<p><a href="/puppy/'+puppy.puppyID+'">'
+        +puppy.puppyName+'</a></p>');
+    });
   })
-  .fail(function(err){
-    console.log(err);
-  });
+  // .fail(function(err){
+  //   console.log(err);
+  // });
 }
